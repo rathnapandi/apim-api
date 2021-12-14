@@ -29,9 +29,7 @@ public class ApimCassandraApplication {
 
 
     public static void main(String[] args) {
-        ApplicationContext applicationContext = SpringApplication.run(ApimCassandraApplication.class, args);
-//        APIManager apiManager = applicationContext.getBean(APIManager.class);
-    //        apiManager.listProxiesAndAccessByAPIName("ptr-partner-vendor-westpac-pymntinvstgtn-v1");
+       SpringApplication.run(ApimCassandraApplication.class, args);
     }
 
 

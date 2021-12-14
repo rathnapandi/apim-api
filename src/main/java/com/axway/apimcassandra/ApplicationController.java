@@ -19,12 +19,10 @@ import java.util.Base64;
 import java.util.List;
 
 @RestController
+@RequestMapping("/api/v1.4")
 public class ApplicationController {
 
-
-
     private  final Logger logger = LoggerFactory.getLogger(ApplicationController.class);
-
 
     private ApplicationRepository applicationRepository;
     public ApplicationController(ApplicationRepository applicationRepository){

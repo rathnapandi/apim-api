@@ -1,12 +1,10 @@
 package com.axway.apimcassandra.config;
 
 
-import com.axway.apimcassandra.service.UserDetailsService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Import;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -91,7 +89,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         .and()
             .authorizeRequests()
             .antMatchers("/api/authenticate").permitAll()
-            .antMatchers("/api/**").hasAnyAuthority("oadmin", "admin");
+            .antMatchers("/v3/api-docs/*").permitAll()
+            .antMatchers("/swagger-ui/*").permitAll()
+            .antMatchers("/api/**").hasAnyAuthority("oadmin", "admin")
+            .antMatchers("**").hasAnyAuthority("oadmin", "admin");
 
 
         // @formatter:on

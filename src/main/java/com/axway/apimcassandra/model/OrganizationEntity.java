@@ -1,13 +1,13 @@
 package com.axway.apimcassandra.model;
 
-import com.axway.apimcassandra.StringDeserializer;
+import com.axway.apimcassandra.StringQuoteDeserializer;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import org.springframework.data.cassandra.core.mapping.Column;
 import org.springframework.data.cassandra.core.mapping.PrimaryKey;
 import org.springframework.data.cassandra.core.mapping.Table;
 
 @Table(value = "api_portal_portalorganizationstore")
-@JsonDeserialize(using = StringDeserializer.class)
+@JsonDeserialize(using = StringQuoteDeserializer.class)
 
 public class OrganizationEntity {
     @PrimaryKey
