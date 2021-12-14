@@ -1,13 +1,11 @@
 package com.axway.apimcassandra.model;
 
-import com.axway.apimcassandra.StringQuoteDeserializer;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.datastax.oss.driver.api.core.CqlIdentifier;
 import org.springframework.data.cassandra.core.mapping.Column;
 import org.springframework.data.cassandra.core.mapping.PrimaryKey;
 import org.springframework.data.cassandra.core.mapping.Table;
 
 @Table(value = "api_portal_portalorganizationstore")
-@JsonDeserialize(using = StringQuoteDeserializer.class)
 
 public class OrganizationEntity {
     @PrimaryKey
@@ -50,7 +48,9 @@ public class OrganizationEntity {
     }
 
     public String getEmail() {
-        return email;
+        if(email != null)
+            return CqlIdentifier.fromCql(email).asInternal();
+        return null;
     }
 
     public void setEmail(String email) {
@@ -66,7 +66,9 @@ public class OrganizationEntity {
     }
 
     public String getEndTrialDate() {
-        return endTrialDate;
+        if(endTrialDate != null)
+            return CqlIdentifier.fromCql(endTrialDate).asInternal();
+        return null;
     }
 
     public void setEndTrialDate(String endTrialDate) {
@@ -74,7 +76,9 @@ public class OrganizationEntity {
     }
 
     public String getId() {
-        return id;
+        if(id != null)
+            return CqlIdentifier.fromCql(id).asInternal();
+        return null;
     }
 
     public void setId(String id) {
@@ -90,7 +94,9 @@ public class OrganizationEntity {
     }
 
     public String getIsTrial() {
-        return isTrial;
+        if(isTrial != null)
+            return CqlIdentifier.fromCql(isTrial).asInternal();
+        return null;
     }
 
     public void setIsTrial(String isTrial) {
@@ -98,7 +104,9 @@ public class OrganizationEntity {
     }
 
     public String getOrganizationDn() {
-        return organizationDn;
+        if(organizationDn != null)
+            return CqlIdentifier.fromCql(organizationDn).asInternal();
+        return null;
     }
 
     public void setOrganizationDn(String organizationDn) {
@@ -122,7 +130,9 @@ public class OrganizationEntity {
     }
 
     public String getStartTrialDate() {
-        return startTrialDate;
+        if(startTrialDate != null)
+            return CqlIdentifier.fromCql(startTrialDate).asInternal();
+        return null;
     }
 
     public void setStartTrialDate(String startTrialDate) {
@@ -138,7 +148,9 @@ public class OrganizationEntity {
     }
 
     public String getTrialDuration() {
-        return trialDuration;
+        if(trialDuration != null)
+            return CqlIdentifier.fromCql(trialDuration).asInternal();
+        return null;
     }
 
     public void setTrialDuration(String trialDuration) {
@@ -146,7 +158,9 @@ public class OrganizationEntity {
     }
 
     public String getVirtualHost() {
-        return virtualHost;
+        if(virtualHost != null)
+            return CqlIdentifier.fromCql(virtualHost).asInternal();
+        return null;
     }
 
     public void setVirtualHost(String virtualHost) {

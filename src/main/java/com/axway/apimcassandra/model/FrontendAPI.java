@@ -1,5 +1,7 @@
 package com.axway.apimcassandra.model;
 
+import com.axway.apimcassandra.Util;
+import com.datastax.oss.driver.api.core.CqlIdentifier;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.data.cassandra.core.mapping.Column;
 import org.springframework.data.cassandra.core.mapping.PrimaryKey;
@@ -35,7 +37,7 @@ public class FrontendAPI {
     private String createdBy;
 
     public String getId() {
-        return id;
+       return Util.removeQuote(id);
     }
 
     public void setId(String id) {
@@ -43,7 +45,7 @@ public class FrontendAPI {
     }
 
     public String getOrganizationId() {
-        return organizationId;
+        return Util.removeQuote(organizationId);
     }
 
     public void setOrganizationId(String organizationId) {
@@ -51,7 +53,7 @@ public class FrontendAPI {
     }
 
     public String getApiId() {
-        return apiId;
+        return Util.removeQuote(apiId);
     }
 
     public void setApiId(String apiId) {
@@ -59,7 +61,7 @@ public class FrontendAPI {
     }
 
     public String getName() {
-        return name;
+        return Util.removeQuote(name);
     }
 
     public void setName(String name) {
@@ -67,7 +69,7 @@ public class FrontendAPI {
     }
 
     public String getVersion() {
-        return version;
+        return Util.removeQuote(version);
     }
 
     public void setVersion(String version) {
@@ -91,7 +93,7 @@ public class FrontendAPI {
     }
 
     public String getPath() {
-        return path;
+        return Util.removeQuote(path);
     }
 
     public void setPath(String path) {
@@ -147,7 +149,7 @@ public class FrontendAPI {
     }
 
     public String getState() {
-        return state;
+        return Util.removeQuote(state);
     }
 
     public void setState(String state) {
@@ -163,7 +165,7 @@ public class FrontendAPI {
     }
 
     public String getCreatedBy() {
-        return createdBy;
+        return Util.removeQuote(createdBy);
     }
 
     public void setCreatedBy(String createdBy) {

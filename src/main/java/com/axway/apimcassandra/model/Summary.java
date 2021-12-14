@@ -1,9 +1,7 @@
 package com.axway.apimcassandra.model;
 
-import com.axway.apimcassandra.StringQuoteDeserializer;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
-@JsonDeserialize(using = StringQuoteDeserializer.class)
 public class Summary {
     private int frontendAPICount;
     private int backendAPICount;

@@ -1,7 +1,6 @@
 package com.axway.apimcassandra.config;
 
 import com.axway.apimcassandra.APIManager;
-import com.axway.apimcassandra.StringQuoteDeserializer;
 import com.fasterxml.jackson.databind.Module;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import io.swagger.v3.oas.models.OpenAPI;
@@ -22,12 +21,6 @@ public class Config {
 //    }
 
 
-    @Bean
-    public Module stringDeserializer() {
-        SimpleModule module = new SimpleModule();
-        module.addDeserializer(String.class, new StringQuoteDeserializer());
-        return module;
-    }
 
     @Bean
     APIManager apiManager(){
