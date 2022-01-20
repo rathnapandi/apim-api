@@ -12,10 +12,9 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.header.writers.ReferrerPolicyHeaderWriter;
-import org.springframework.util.CollectionUtils;
 import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import org.springframework.web.filter.CorsFilter;
 
 import java.util.List;
 
@@ -54,6 +53,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         return new AjaxAuthenticationSuccessHandler();
     }
 
+
+    @Bean
+    public LogoutSuccessHandler logoutSuccessHandler() {
+        return new LogoutSuccessHandler();
+    }
+
     @Bean
     public AjaxAuthenticationFailureHandler ajaxAuthenticationFailureHandler() {
         return new AjaxAuthenticationFailureHandler();
@@ -64,7 +69,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(HttpSecurity http) throws Exception {
         // @formatter:off
-        http
+        http.cors().and()
             .csrf()
             .disable()
             .headers()
@@ -89,36 +94,33 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         .and()
             .authorizeRequests()
             .antMatchers("/api/authenticate").permitAll()
+            .antMatchers("/api/logout").permitAll()
             .antMatchers("/v3/api-docs/*").permitAll()
             .antMatchers("/swagger-ui/*").permitAll()
             .antMatchers("/api/**").hasAnyAuthority("oadmin", "admin")
-            .antMatchers("**").hasAnyAuthority("oadmin", "admin");
-
-
+            .antMatchers("**").hasAnyAuthority("oadmin", "admin")
+            .and().logout().logoutUrl("/api/logout").logoutSuccessHandler(logoutSuccessHandler()).invalidateHttpSession(true);
         // @formatter:on
     }
 
 
+
     @Bean
-    public CorsFilter corsFilter() {
-        logger.info("Registering cors");
-        CorsConfiguration corsConfiguration = new CorsConfiguration();
-        corsConfiguration.setAllowedOrigins(allowedOrigins);
-        corsConfiguration.setAllowedMethods(allowedMethods);
-        corsConfiguration.setAllowedHeaders(allowedHeaders);
-        corsConfiguration.setMaxAge(maxAge);
-        corsConfiguration.setAllowCredentials(allowCredentials);
-        corsConfiguration.setExposedHeaders(exposedHeaders);
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(allowedOrigins);
+        configuration.setAllowedMethods(allowedMethods);
+        configuration.setAllowedHeaders(allowedHeaders);
+        configuration.setExposedHeaders(exposedHeaders);
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        if (!CollectionUtils.isEmpty(corsConfiguration.getAllowedOrigins()) || !CollectionUtils.isEmpty(corsConfiguration.getAllowedOriginPatterns())) {
-            logger.debug("Registering CORS filter");
-            source.registerCorsConfiguration("/api/**", corsConfiguration);
-            source.registerCorsConfiguration("/v2/api-docs", corsConfiguration);
-            source.registerCorsConfiguration("/v3/api-docs", corsConfiguration);
-            source.registerCorsConfiguration("/swagger-resources", corsConfiguration);
-            source.registerCorsConfiguration("/swagger-ui/**", corsConfiguration);
-        }
-        return new CorsFilter(source);
+        source.registerCorsConfiguration("/api/**", configuration);
+        source.registerCorsConfiguration("/v2/api-docs", configuration);
+        source.registerCorsConfiguration("/v3/api-docs", configuration);
+        source.registerCorsConfiguration("/swagger-resources", configuration);
+        source.registerCorsConfiguration("/swagger-ui/**", configuration);
+        return source;
     }
+
+
 
 }
