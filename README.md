@@ -1,2 +1,2 @@
 
-# API Manager API 
+# Expose REST API from Cassandra DB
